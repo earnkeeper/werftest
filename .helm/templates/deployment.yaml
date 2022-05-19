@@ -20,10 +20,5 @@ spec:
           image: '{{ .Values.werf.image.app }}'
           workingDir: /app
           env:
-            {{ if eq .Values.werf.env "staging" }}
             - name: DEMO_VALUE
-              value: {{ .Values.service.staging.demoValue }}
-            {{ else }}
-            - name: DEMO_VALUE
-              value: {{ .Values.service._default.demoValue }}
-            {{ end }}          
+              value: {{ get .Values.mongodb.dbName .Values.werf.env | default .Values.mongodb.dbName._default  }}
