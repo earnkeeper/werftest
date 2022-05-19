@@ -21,4 +21,4 @@ spec:
           workingDir: /app
           env:
             - name: DEMO_VALUE
-              value: {{ get .Values.mongodb.dbName .Values.werf.env | default .Values.mongodb.dbName._default  }}
+              value: {{ eq .Values.werf.env "staging" | ternary .Values.mongodb.dbName.staging .Values.mongodb.dbName._default  }}
