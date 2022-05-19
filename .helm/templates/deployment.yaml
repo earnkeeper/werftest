@@ -20,5 +20,10 @@ spec:
           image: '{{ .Values.werf.image.app }}'
           workingDir: /app
           env:
-            - name: DEMO_VALUE
-              value: {{ .Values.service.demoValue }}
+      {{ if eq .Values.werf.env "staging" }}
+        - name: DEMO_VALUE
+          value: {{ .Values.service.staging.demoValue }}
+      {{ else }}
+        - name: DEMO_VALUE
+          value: {{ .Values.service._default.demoValue }}
+      {{ end }}          
